@@ -1,0 +1,431 @@
+/* Variables */
+:root {
+    /* New color scheme */
+    --background-color: #121212;
+    --card-background: #1a1a1a;
+    --primary-color: #ff1744;
+    --secondary-color: #d50000;
+    --text-color: #ffffff;
+    --text-secondary: #b3b3b3;
+    --border-color: #2a2a2a;
+    --overlay-color: rgba(0, 0, 0, 0.75);
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --hover-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+    --error-color: #ef4444;
+    --success-color: #10b981;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* Container */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin: 0 0 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header-controls {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Search and Filter */
+.search-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(255, 23, 68, 0.2);
+}
+
+.filter-container {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.filter-btn:hover {
+    background-color: var(--border-color);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.admin-btn, .request-btn {
+    background-color: var(--card-background);
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.request-btn {
+    margin-left: 1rem;
+    background-color: #229ED9;
+    border-color: #229ED9;
+}
+
+.request-btn:hover {
+    background-color: #1C89BD;
+}
+
+.admin-btn:hover, .request-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--card-shadow);
+}
+
+.admin-btn:hover {
+    background-color: var(--primary-color);
+}
+
+.admin-btn .material-icons, .request-btn .material-icons {
+    color: var(--text-color);
+    opacity: 0.9;
+    margin-right: 6px;
+}
+
+.telegram-icon {
+    fill: var(--text-color);
+    opacity: 0.9;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    padding: 2rem 0;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    perspective: 1000px;
+    transition: opacity 0.3s ease-out;
+}
+
+/* Card Styles */
+.content-card {
+    height: 400px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-card.is-flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: var(--card-background);
+    box-shadow: var(--card-shadow);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, var(--overlay-color) 0%, transparent 100%);
+    color: var(--text-color);
+}
+
+.card-overlay h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+}
+
+.card-meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.card-type,
+.card-genre {
+    padding: 0.25rem 0.75rem;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    color: white;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.card-description {
+    flex: 1;
+    margin: 1rem 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-align: center;
+    justify-content: center;
+}
+
+.download-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Loading Animation */
+.loading-container {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: var(--text-color);
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+/* Toast Messages */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    box-shadow: var(--card-shadow);
+    z-index: 1000;
+    animation: slideUp 0.3s ease-out;
+}
+
+.toast-error {
+    background-color: var(--error-color);
+}
+
+.toast-success {
+    background-color: var(--success-color);
+}
+
+/* Animations */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Scroll to top button */
+.scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--primary-color);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow);
+    z-index: 1000;
+}
+
+.scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* No Results State */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.no-results .material-icons {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .header {
+        padding: 1rem 0;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .content-card {
+        height: 350px;
+    }
+
+    .scroll-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Preloader */
+.preloader {
+    background-color: var(--background-color);
+}
+
+.preloader .loading-spinner {
+    border-color: var(--border-color);
+    border-top-color: var(--primary-color);
+}
